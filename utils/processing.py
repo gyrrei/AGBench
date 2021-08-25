@@ -6,14 +6,6 @@ from PIL import Image
 PIL.Image.MAX_IMAGE_PIXELS = None
 
 
-class Satellite_Map:
-  def __init__(self, origin, values, shape, coord):
-    self.origin = origin
-    self.shape = (shape[0], shape[1])
-    self.coord = coord
-    self.values = values
-
-
 class Coord:
     def __init__(self, lat_min, lat_max, lon_min, lon_max):
         self.lon_min = lon_min
