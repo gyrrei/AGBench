@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 
 def plot_all_sites (drone_image, crude, resized, filtered, site_no, cmap= 'Reds'):
     # Visualizing the development process of
@@ -49,11 +50,15 @@ def AGB_density_analysis(results, field_data, site_no, map_filtered, map_name):
     field = field_data.loc[site_no, 'AGB density (tons/ha)']
     filtered = map_filtered[map_filtered != 0].mean()
 
-    results = results.append({'site no': int(site_no),
-                              'AGB density (field data)': field.round(0),
-                              'AGB density (estimation from {})'.format(map_name): filtered.round(0),
-                              'Factor for {}'.format(map_name): (filtered / field).round(1)
-                              },
-                             ignore_index=True)
+    # Create a new row as a DataFrame
+    new_row = pd.DataFrame([{
+        'site no': int(site_no),
+        'AGB density (field data)': field.round(0),
+        'AGB density (estimation from {})'.format(map_name): filtered.round(0),
+        'Factor for {}'.format(map_name): (filtered / field).round(1)
+    }])
+
+    # Use pd.concat to append the new row to the results DataFrame
+    results = pd.concat([results, new_row], ignore_index=True)
 
     return results
